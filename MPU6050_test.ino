@@ -37,27 +37,23 @@ void setup() {
     Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
 
     // use the code below to change accel/gyro offset values
-    /*
+    
     Serial.println("Updating internal sensor offsets...");
-    // -76	-2359	1688	0	0	0
-    Serial.print(accelgyro.getXAccelOffset()); Serial.print("\t"); // -76
-    Serial.print(accelgyro.getYAccelOffset()); Serial.print("\t"); // -2359
-    Serial.print(accelgyro.getZAccelOffset()); Serial.print("\t"); // 1688
-    Serial.print(accelgyro.getXGyroOffset()); Serial.print("\t"); // 0
-    Serial.print(accelgyro.getYGyroOffset()); Serial.print("\t"); // 0
-    Serial.print(accelgyro.getZGyroOffset()); Serial.print("\t"); // 0
+    //  -640,    2047,    4926,     -33,      -8,      56
+    accelgyro.setXAccelOffset(-640);
+    accelgyro.setYAccelOffset(2047);
+    accelgyro.setZAccelOffset(4926);
+    accelgyro.setXGyroOffset(-33);
+    accelgyro.setYGyroOffset(-8);
+    accelgyro.setZGyroOffset(56);
+    Serial.print(accelgyro.getXAccelOffset()); Serial.print("\t");
+    Serial.print(accelgyro.getYAccelOffset()); Serial.print("\t");
+    Serial.print(accelgyro.getZAccelOffset()); Serial.print("\t");
+    Serial.print(accelgyro.getXGyroOffset()); Serial.print("\t");
+    Serial.print(accelgyro.getYGyroOffset()); Serial.print("\t");
+    Serial.print(accelgyro.getZGyroOffset()); Serial.print("\t");
     Serial.print("\n");
-    accelgyro.setXGyroOffset(220);
-    accelgyro.setYGyroOffset(76);
-    accelgyro.setZGyroOffset(-85);
-    Serial.print(accelgyro.getXAccelOffset()); Serial.print("\t"); // -76
-    Serial.print(accelgyro.getYAccelOffset()); Serial.print("\t"); // -2359
-    Serial.print(accelgyro.getZAccelOffset()); Serial.print("\t"); // 1688
-    Serial.print(accelgyro.getXGyroOffset()); Serial.print("\t"); // 0
-    Serial.print(accelgyro.getYGyroOffset()); Serial.print("\t"); // 0
-    Serial.print(accelgyro.getZGyroOffset()); Serial.print("\t"); // 0
-    Serial.print("\n");
-    */
+    
 }
 
 void loop() {
