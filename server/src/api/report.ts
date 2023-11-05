@@ -5,6 +5,20 @@ import { connection } from "./index";
 const report: RequestHandler = async function (req, res) {
     const { body, params } = req;
     const manhole_id = params.manhole_id;
+    const data = body.map((sensor_data: number[]) => {
+        return {
+            acceleration: {
+                x: sensor_data[0],
+                y: sensor_data[1],
+                z: sensor_data[2],
+            },
+            gyro: {
+                x: sensor_data[3],
+                y: sensor_data[4],
+                z: sensor_data[5],
+            },
+        };
+    });
     let sqlQuery = `
     INSERT INTO Events ( 
         manhole_id, 
@@ -12,7 +26,7 @@ const report: RequestHandler = async function (req, res) {
     )
     VALUES (
         "${manhole_id}", 
-        '${JSON.stringify(body)}'
+        '${JSON.stringify(data)}'
     );
     `;
     connection.query(sqlQuery, (err, _) => {
