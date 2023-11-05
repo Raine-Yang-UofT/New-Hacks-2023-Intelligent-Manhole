@@ -10,14 +10,10 @@ interface Event {
 
 // /events
 const events: RequestHandler = async function (req, res) {
-    const { query } = req;
-    let condition = "";
-    if (query.status) condition = `status="${query.status}"`;
     let sqlQuery = `
     SELECT *
     FROM Events
     `;
-    if (condition) sqlQuery += `WHERE ${condition}`;
     connection.query(sqlQuery, (err, data) => {
         if (err || data.length === 0) {
             console.log(err);
@@ -32,8 +28,8 @@ const events: RequestHandler = async function (req, res) {
     });
 };
 
-// /events/:manhole_id
-const eventsWithId: RequestHandler = async function (req, res) {
+// /eventsByManholeId/:manhole_id
+const eventsByManholeId: RequestHandler = async function (req, res) {
     const { params } = req;
     const id = params.manhole_id;
     let sqlQuery = `
@@ -44,7 +40,7 @@ const eventsWithId: RequestHandler = async function (req, res) {
     connection.query(sqlQuery, (err, data) => {
         if (err || data.length === 0) {
             console.log(err);
-            res.json([]);
+            res.json({});
         } else {
             res.json(
                 data.map((event: Event) => {
@@ -55,4 +51,23 @@ const eventsWithId: RequestHandler = async function (req, res) {
     });
 };
 
-export { events, eventsWithId };
+// /events/:event_id
+const eventsById: RequestHandler = async function (req, res) {
+    const { params } = req;
+    const id = params.event_id;
+    let sqlQuery = `
+    SELECT *
+    FROM Events
+    WHERE event_id="${id}"
+    `;
+    connection.query(sqlQuery, (err, data) => {
+        if (err || data.length === 0) {
+            console.log(err);
+            res.json({});
+        } else {
+            res.json({ ...data[0], data: JSON.parse(data[0].data) });
+        }
+    });
+};
+
+export { events, eventsById, eventsByManholeId };
