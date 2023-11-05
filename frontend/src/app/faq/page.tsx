@@ -28,11 +28,6 @@ export default function Faq() {
                         movement of these manholes so that it can alert the website if any alarming activities were to happen.</p>
                 </div>
                 <div>
-                    <h3 className={styles.title}><strong>How was this created?</strong>
-                    </h3>
-                    <p className={styles.content}>&nbsp;</p>
-                </div>
-                <div>
                     <h3 className={styles.title}><strong>How does this relate to Smart
                         Cities?</strong>
                     </h3>

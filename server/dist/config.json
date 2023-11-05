@@ -1,9 +1,0 @@
-{
-    "database": {
-        "host": "35.223.179.218",
-        "user": "root",
-        "password": "jerry0119",
-        "port": 3306,
-        "database": "manhole"
-    }
-}
