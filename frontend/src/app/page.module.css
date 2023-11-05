@@ -1,0 +1,12 @@
+.heading {
+    font-family: "Handlee", cursive;
+    color: #99a381;
+    font-weight: bold;
+    font-size: 70px;
+    margin-bottom: 6px;
+}
+
+.logo {
+    width: 400px;
+    height: auto;
+}

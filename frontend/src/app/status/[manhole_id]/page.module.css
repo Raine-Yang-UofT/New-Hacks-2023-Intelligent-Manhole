@@ -1,0 +1,30 @@
+.status-column {
+  float: left;
+  width: 30%;
+  margin-left: 10%;
+}
+
+.event-column {
+  float: right;
+  width: 50%;
+  margin-right: 10%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.table-column-event-id {
+    width: 60%;
+}
+
+.table-column-time {
+    width: 30%;
+}
+
+.table-column-data {
+    width: 10%;
+}

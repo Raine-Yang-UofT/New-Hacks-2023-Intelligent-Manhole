@@ -1,0 +1,15 @@
+.faq-table {
+    width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.faq-table-row {
+    height: 18px;
+}
+
+.faq-table-cell {
+    width: 2379px;
+    text-align: left;
+    height: 18px;
+}
