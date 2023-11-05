@@ -25,18 +25,18 @@ type Displacement = {
 
 function Manhole({ data }: AnimationProps) {
     const ref = useRef<Mesh>(null!);
-    let tilt_sum: Tilt[] = [{ x: 0, y: 0, z: 0 }];
+    let gyro_sum: Tilt[] = [{ x: 0, y: 0, z: 0 }];
     let displacement_sum: Displacement[] = [{ x: 0, y: 0, z: 0 }];
     for (let i = 0; i < data.length; i++) {
-        tilt_sum.push({
-            x: tilt_sum[i].x + data[i].tilt_x * delta_time,
-            y: tilt_sum[i].y + data[i].tilt_y * delta_time,
-            z: tilt_sum[i].z + data[i].tilt_z * delta_time,
+        gyro_sum.push({
+            x: gyro_sum[i].x + data[i].gyro.x * delta_time,
+            y: gyro_sum[i].y + data[i].gyro.y * delta_time,
+            z: gyro_sum[i].z + data[i].gyro.z * delta_time,
         })
         displacement_sum.push({
-            x: displacement_sum[i].x + data[i].displacement_x * delta_time,
-            y: displacement_sum[i].y + data[i].displacement_y * delta_time,
-            z: displacement_sum[i].z + data[i].displacement_z * delta_time,
+            x: displacement_sum[i].x + data[i].acceleration.x * delta_time,
+            y: displacement_sum[i].y + data[i].acceleration.y * delta_time,
+            z: displacement_sum[i].z + data[i].acceleration.z * delta_time,
         })
     }
 
@@ -48,20 +48,20 @@ function Manhole({ data }: AnimationProps) {
             return;
         }
         const remain_time = time - delta_time * time_section;
-        let tilt = {
-            x: tilt_sum[time_section].x + remain_time * data[time_section].tilt_x,
-            y: tilt_sum[time_section].y + remain_time * data[time_section].tilt_y,
-            z: tilt_sum[time_section].z + remain_time * data[time_section].tilt_z,
+        let gyro = {
+            x: gyro_sum[time_section].x + remain_time * data[time_section].gyro.x,
+            y: gyro_sum[time_section].y + remain_time * data[time_section].gyro.y,
+            z: gyro_sum[time_section].z + remain_time * data[time_section].gyro.z,
         };
         let displacement = {
-            x: displacement_sum[time_section].x + remain_time * data[time_section].displacement_x,
-            y: displacement_sum[time_section].y + remain_time * data[time_section].displacement_y,
-            z: displacement_sum[time_section].z + remain_time * data[time_section].displacement_z,
+            x: displacement_sum[time_section].x + remain_time * data[time_section].acceleration.x,
+            y: displacement_sum[time_section].y + remain_time * data[time_section].acceleration.y,
+            z: displacement_sum[time_section].z + remain_time * data[time_section].acceleration.z,
         };
 
-        ref.current.rotation.x = tilt.x;
-        ref.current.rotation.y = tilt.y;
-        ref.current.rotation.z = tilt.z;
+        ref.current.rotation.x = gyro.x;
+        ref.current.rotation.y = gyro.y;
+        ref.current.rotation.z = gyro.z;
         ref.current.position.x = displacement.x;
         ref.current.position.y = displacement.y;
         ref.current.position.z = displacement.z;
@@ -87,7 +87,7 @@ export default function ManholeAnimation({ data }: AnimationProps) {
 
     return (
         <div style={{ width: "50", height: "100vh" }}>
-            <Canvas camera={{ position: [0, 0, 5] }} style={{ background: "#ffffff", width: "50vw", height: "50vh", marginLeft: "auto", marginRight: "auto" }}>
+            <Canvas camera={{ position: [0, 0, 5] }} style={{ width: "50vw", height: "50vh", marginLeft: "auto", marginRight: "auto" }}>
                 <ambientLight intensity={0.5} />
                 <pointLight position={[10, 10, 10]} castShadow />
                 <Manhole data={data} />

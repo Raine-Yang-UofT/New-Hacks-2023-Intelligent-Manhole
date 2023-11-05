@@ -11,24 +11,15 @@ export interface SensorAcceleration {
     z: number;
 }
 
-export interface SensorTilt {
+export interface SensorGyro {
     x: number;
     y: number;
     z: number;
 }
 
-// export interface SensorData {
-//     acceleration: SensorAcceleration;
-//     tilt: SensorTilt;
-// }
-
 export interface SensorData {
-    displacement_x: number;
-    displacement_y: number;
-    displacement_z: number;
-    tilt_x: number;
-    tilt_y: number;
-    tilt_z: number;
+    acceleration: SensorAcceleration;
+    gyro: SensorGyro;
 }
 
 export interface ManholeEvent {
