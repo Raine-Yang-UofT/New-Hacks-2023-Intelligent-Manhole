@@ -5,7 +5,7 @@
 #include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
 
-const char* SSID = "Raine's iPhone";
+const char* SSID = "Raine-iPhone";
 const char* PASSWORD = "4373761066";
 const char* SERVER_URL = "34.71.38.254";
 
@@ -76,12 +76,12 @@ void setup() {
     WiFi.mode(WIFI_STA);
     WiFi.begin(SSID, PASSWORD);
 
-    /*
+    
     while (WiFi.status() != WL_CONNECTED) {
       delay(1000);
       Serial.println(WiFi.status());
     }
-    */
+    
 
     Serial.println(WiFi.localIP());
 }
@@ -164,13 +164,13 @@ void sendAbnormality(int gyro_data[5][6], String status, int index) {
   JsonArray data_0 = data.createNestedArray();
   for (int i = 0; i < 6; i++) {data_0.add(gyro_data[(index + 1) % 5][i]);};
   JsonArray data_1 = data.createNestedArray();
-  for (int i = 0; i < 6; i++) {data_0.add(gyro_data[(index + 2) % 5][i]);};
+  for (int i = 0; i < 6; i++) {data_1.add(gyro_data[(index + 2) % 5][i]);};
   JsonArray data_2 = data.createNestedArray();
-  for (int i = 0; i < 6; i++) {data_0.add(gyro_data[(index + 3) % 5][i]);};
+  for (int i = 0; i < 6; i++) {data_2.add(gyro_data[(index + 3) % 5][i]);};
   JsonArray data_3 = data.createNestedArray();
-  for (int i = 0; i < 6; i++) {data_0.add(gyro_data[(index + 4) % 5][i]);};
+  for (int i = 0; i < 6; i++) {data_3.add(gyro_data[(index + 4) % 5][i]);};
   JsonArray data_4 = data.createNestedArray();
-  for (int i = 0; i < 6; i++) {data_0.add(gyro_data[index][i]);};
+  for (int i = 0; i < 6; i++) {data_4.add(gyro_data[index][i]);};
 
   // send POST request
   String jsonMessage;
