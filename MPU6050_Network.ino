@@ -7,7 +7,7 @@
 
 const char* SSID = "Raine-iPhone";
 const char* PASSWORD = "4373761066";
-const char* SERVER_URL = "http://34.71.38.254";
+const char* SERVER_URL = "http://34.71.38.254:5000/api/report/BA-001";
 
 // class default I2C address is 0x68
 // specific I2C addresses may be passed as a parameter here
@@ -28,7 +28,7 @@ float thresholdGY = 10;
 float thresholdGZ = 10;
 
 // Define the size of the circular buffer
-const int bufferSize = 10;
+const int bufferSize = 22;
 
 // Create a circular buffer to store readings
 int readings[bufferSize][6];
@@ -117,7 +117,7 @@ void loop() {
     Serial.println("g; ");
     if (abs(ax) > thresholdAX || abs(ay) > thresholdAY || abs(az) > thresholdAZ) {   
         Serial.println("Notable displacement detected!");
-        sendAbnormality(readings, "displacement", currentIndex);
+        sendAbnormality(currentIndex);
     }
 
     // detect rotation
@@ -130,22 +130,14 @@ void loop() {
     Serial.println("°/s");
     if (abs(gx) > thresholdGX || abs(gy) > thresholdGY || abs(gz) > thresholdGZ) {   
         Serial.println("Notable tilt detected!");
-        sendAbnormality(readings, "tilt", currentIndex);
-    }
-
-    for (int i = 0; i < bufferSize; i++) {
-      for (int j = 0; j < 6; j++) {
-        Serial.print(readings[(currentIndex + i) % bufferSize][j]);
-        Serial.print("\t");
-      }
-      Serial.println();
+        sendAbnormality(currentIndex);
     }
     
-    delay(500);
+    delay(1000);
 }
 
 
-void sendAbnormality(int gyro_data[bufferSize][6], String status, int index) {
+void sendAbnormality(int index) {
   // check wifi connection
   if (WiFi.status() != WL_CONNECTED) {
       Serial.println("Error in WiFi connection");
@@ -159,20 +151,20 @@ void sendAbnormality(int gyro_data[bufferSize][6], String status, int index) {
   http.addHeader("Content-Type", "application/json"); // send json message
 
   // construct json message
-  StaticJsonDocument<1024> doc;
-  doc["status"] = status;
-  doc["timestamp"] = millis();
-  JsonArray data = doc.createNestedArray("data");
-  for (int row = 0; row < bufferSize; row++) {
-    JsonArray data_row = data.createNestedArray();
-    for (int col = 0; col < 6; col++) {
-      data_row.add(gyro_data[(index + row) % bufferSize][col]);
+  String jsonMessage = "[";
+  for (int i = 0; i < bufferSize; i++) {
+    jsonMessage += "[";
+    for (int j = 0; j < 6; j++) {
+      jsonMessage += readings[(index + i) % bufferSize][j];
+      if (j != 5) {
+        jsonMessage += ", ";
+      }
     }
+    jsonMessage += "],";
   }
+  jsonMessage += "]";
 
-  // send POST request
-  String jsonMessage;
-  serializeJson(doc, jsonMessage);
+  Serial.println(jsonMessage);
   int httpCode = http.POST(jsonMessage);
 
   http.end(); // close connection
