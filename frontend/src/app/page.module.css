@@ -1,3 +1,10 @@
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
 .heading {
     font-family: "Handlee", cursive;
     color: #99a381;

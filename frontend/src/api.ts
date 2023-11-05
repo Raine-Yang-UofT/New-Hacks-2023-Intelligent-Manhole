@@ -1,7 +1,6 @@
 import { ManholeStatus, ManholeEvent } from "@/types";
-import { notFound } from "next/navigation";
 
-const API_ROOT = "http://34.71.38.254:5000/api";
+export const API_ROOT = "http://34.71.38.254:5000/api";
 
 export async function getAllManholeStatus(): Promise<ManholeStatus[]> {
     const result = await fetch(API_ROOT + "/status", { cache: "no-store" });
@@ -41,4 +40,15 @@ export async function getManholeEventsByEventId(event_id: string): Promise<Manho
         throw Error(`Error occured when getting event ${event_id}`);
     }
     return result.json();
+}
+
+export async function setManholeNormal(manhole_id: string): Promise<void> {
+    const result = await fetch(API_ROOT + `/reportNormal/${manhole_id}`, {
+        method: "POST",
+        cache: "no-store",
+    });
+    if (!result.ok) {
+        throw Error(`Error occured when getting event ${manhole_id}`);
+    }
+    return;
 }

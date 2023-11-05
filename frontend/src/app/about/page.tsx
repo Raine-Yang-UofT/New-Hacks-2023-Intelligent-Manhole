@@ -14,30 +14,26 @@ export default function About() {
                 <div className={styles["column-left"]}>
                     <h1> Chuyi Wang </h1>
                     <br />
-                    <p> Experienced in frontend and backend programming.</p>
+                    <p> I am Chuyi Wang and I am currently a first-year Computer Science student in University of Toronto.</p>
                     <br />
                     <p> In charge of backend design and frontend programming logic</p>
                 </div>
                 <div className={styles["column-center"]}>
                     <h1> Raine Yang </h1>
                     <br />
-                    <p> Experienced in hardware.</p>
+                    <p> I am Raine Yang and I am currently a first-year Computer Science student in University of Toronto.</p>
                     <br />
                     <p> In charge of sensor programming.</p>
                 </div>
                 <div className={styles["column-center"]}>
-                    <h1> Chuyi Wang </h1>
+                    <h1>Raisa Kayastha</h1>
                     <br />
-                    <p> Experienced in frontend and backend programming.</p>
-                    <br />
-                    <p> In charge of backend design and frontend programming logic</p>
+                    <p>Hi! I'm Raisa Kayastha, currently a second year CS student at the University of Western Ontario. I worked on front-end for this project alongside Kenda to create the website.</p>
                 </div>
                 <div className={styles["column-right"]}>
-                    <h1> Raine Yang </h1>
+                    <h1>Kenda Najjar</h1>
                     <br />
-                    <p> Experienced in hardware.</p>
-                    <br />
-                    <p> In charge of sensor programming.</p>
+                    <p>Hello! My name is Kenda Najjar and I am currently a second year CS student at the Univeristy of Western Ontario. I was in charge of making the frontend for this project with Raisa.</p>
                 </div>
 
             </div>

@@ -1,0 +1,27 @@
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.button {
+    background-color: #b8c4a4;
+    border: none;
+    color: white;
+    padding: 16px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 32px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    font-family: "Russo One", sans-serif;
+    border-radius: 16px;
+}
+
+.button:hover {
+    background-color: #8b9e76;
+}
+
+

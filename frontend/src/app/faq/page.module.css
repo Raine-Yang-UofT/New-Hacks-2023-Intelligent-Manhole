@@ -13,3 +13,15 @@
     text-align: left;
     height: 18px;
 }
+
+.title {
+    font-family: Bebas Neue;
+    color: #A3A380;
+    font-size: 30px;
+}
+
+.content{
+    font-family: 'Mulish', sans-serif;
+    color: #404E4D;
+    font-size: 20px;
+}

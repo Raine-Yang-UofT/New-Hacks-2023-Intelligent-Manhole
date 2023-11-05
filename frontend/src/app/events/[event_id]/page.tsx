@@ -14,7 +14,7 @@ export default async function ManholeEvents({ params: { event_id } }: { params: 
     return (
         <>
             <Navigation />
-            {data.length >= 100 ?
+            {data.length >= 10 ?
                 <div className={styles.row}>
                     <div className={styles["event-column"]}>
                         <h2>Event Id: {event_id}</h2>
@@ -25,18 +25,17 @@ export default async function ManholeEvents({ params: { event_id } }: { params: 
                         <ManholeAnimation data={data} />
                     </div>
                 </div> :
-                <table style={{ marginLeft: "auto", marginRight: "auto" }}>
-                    <tr>
-                        <th className={styles["table-column-event-id"]}>Event Id</th>
-                        <th className={styles["table-column-manhole-id"]}>Manhole Id</th>
-                        <th className={styles["table-column-time"]}>Time</th>
-                    </tr>
-                    <tr>
-                        <td className={styles["table-column-event-id"]}>{event_id}</td>
-                        <td className={styles["table-column-manhole-id"]}><Link href={`/status/${manhole_id}`}> {manhole_id} </Link></td>
-                        <td className={styles["table-column-time"]}>{new Date(time).toLocaleString()} </td>
-                    </tr>
-                </table>
+                <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                }}>
+                    <h2>Event Id: {event_id}</h2>
+                    <h3>Manhole Id: <Link href={`/status/${manhole_id}`}> {manhole_id} </Link></h3>
+                    <h3>Time: {new Date(time).toLocaleString()} </h3>
+                    <h3><Link href={`/events/${event_id}/data`}> Raw Data </Link></h3>
+                </div >
 
             }
         </>

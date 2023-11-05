@@ -1,0 +1,60 @@
+.circle-container {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.black-circle {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.circle-button {
+    width: 50px;
+    height: 50px;
+    background-image: url("/manhole.png");
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition:
+        background-color 0.3s,
+        transform 0.3s;
+    position: relative;
+}
+
+.circle-button-alarm {
+    width: 50px;
+    height: 50px;
+    background-image: url("/manhole-alarm.png");
+    background-size: cover;
+    background-color: transparent;
+    border: 10px;
+    border-radius: 50%;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+    transition:
+        background-color 0.3s,
+        transform 0.3s;
+    position: relative;
+}
+
+.circle-button-parent:hover .circle-button {
+    background-color: black;
+    transform: translateX(30px);
+}
+
+.circle-button-parent:hover .circle-button-alarm {
+    background-color: black;
+    transform: translateX(30px);
+}

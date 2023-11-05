@@ -2,6 +2,7 @@ import ManholeItem from "./manholeItem"
 import { getAllManholeStatus } from "@/api";
 import Navigation from "@/app/navigation";
 import { Metadata } from "next";
+import ManholeMap from "./manholeMap";
 
 export const metadata: Metadata = {
     title: "Dashboard | Manhole Watchdog",
@@ -14,8 +15,6 @@ export default async function Dashboard() {
     return (<>
         <p>&nbsp;</p>
         <Navigation />
-        <div>
-            {statuses.map(status => <ManholeItem manholeId={status.manhole_id} />)}
-        </div>
+        <ManholeMap data={statuses} />
     </>)
 }
