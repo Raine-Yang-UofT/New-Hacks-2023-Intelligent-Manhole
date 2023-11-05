@@ -35,7 +35,7 @@ const statusWithId: RequestHandler = async function (req, res) {
             console.log(err);
             res.json([]);
         } else {
-            res.json(data);
+            res.json(data[0]);
         }
     });
 };
