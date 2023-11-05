@@ -61,7 +61,7 @@
     .circle-button {
       width: 200px;
       height: 200px;
-      background-image: url('manholeFINAL.png');
+      background-image: url('image/manholeFINAL.png');
       background-size: cover;
       background-color: transparent;
       border: none;
@@ -73,7 +73,7 @@
       position: relative;
     }
 
-    .circle-button:hover {
+    .circle-button-parent-1:hover .circle-button {
       background-color: black;
       transform: translateX(30px);
     }
@@ -115,23 +115,29 @@
         </tr>
 <div class="circle-container">
     <div class="black-circle"></div>
+	<a title="Manhole 1" href="manhole1.html" class="circle-button-parent-1">
     <button class="circle-button">
       <h1>1</h1>
     </button>
+	</a>
   </div>
   <br>
   <div class="circle-container">
     <div class="black-circle"></div>
+	<a title="Manhole 2" href="manhole2.html" class="circle-button-parent-1">
     <button class="circle-button">
       <h1>2</h1>
     </button>
+	</a>
   </div>
   <br>
   <div class="circle-container">
     <div class="black-circle"></div>
+<a title="Manhole 3" href="manhole3.html" class="circle-button-parent-1">
     <button class="circle-button">
       <h1>3</h1>
     </button>
+</a>
   </div>
       </tbody>
     </table>
