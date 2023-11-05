@@ -7,7 +7,7 @@
 
 const char* SSID = "Raine-iPhone";
 const char* PASSWORD = "4373761066";
-const char* SERVER_URL = "34.71.38.254";
+const char* SERVER_URL = "http://34.71.38.254";
 
 // class default I2C address is 0x68
 // specific I2C addresses may be passed as a parameter here
@@ -28,7 +28,7 @@ float thresholdGY = 10;
 float thresholdGZ = 10;
 
 // Define the size of the circular buffer
-const int bufferSize = 5;
+const int bufferSize = 10;
 
 // Create a circular buffer to store readings
 int readings[bufferSize][6];
@@ -117,6 +117,7 @@ void loop() {
     Serial.println("g; ");
     if (abs(ax) > thresholdAX || abs(ay) > thresholdAY || abs(az) > thresholdAZ) {   
         Serial.println("Notable displacement detected!");
+        sendAbnormality(readings, "displacement", currentIndex);
     }
 
     // detect rotation
@@ -129,11 +130,12 @@ void loop() {
     Serial.println("°/s");
     if (abs(gx) > thresholdGX || abs(gy) > thresholdGY || abs(gz) > thresholdGZ) {   
         Serial.println("Notable tilt detected!");
+        sendAbnormality(readings, "tilt", currentIndex);
     }
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < bufferSize; i++) {
       for (int j = 0; j < 6; j++) {
-        Serial.print(readings[(currentIndex + i) % 5][j]);
+        Serial.print(readings[(currentIndex + i) % bufferSize][j]);
         Serial.print("\t");
       }
       Serial.println();
@@ -143,7 +145,7 @@ void loop() {
 }
 
 
-void sendAbnormality(int gyro_data[5][6], String status, int index) {
+void sendAbnormality(int gyro_data[bufferSize][6], String status, int index) {
   // check wifi connection
   if (WiFi.status() != WL_CONNECTED) {
       Serial.println("Error in WiFi connection");
@@ -161,22 +163,18 @@ void sendAbnormality(int gyro_data[5][6], String status, int index) {
   doc["status"] = status;
   doc["timestamp"] = millis();
   JsonArray data = doc.createNestedArray("data");
-  JsonArray data_0 = data.createNestedArray();
-  for (int i = 0; i < 6; i++) {data_0.add(gyro_data[(index + 1) % 5][i]);};
-  JsonArray data_1 = data.createNestedArray();
-  for (int i = 0; i < 6; i++) {data_1.add(gyro_data[(index + 2) % 5][i]);};
-  JsonArray data_2 = data.createNestedArray();
-  for (int i = 0; i < 6; i++) {data_2.add(gyro_data[(index + 3) % 5][i]);};
-  JsonArray data_3 = data.createNestedArray();
-  for (int i = 0; i < 6; i++) {data_3.add(gyro_data[(index + 4) % 5][i]);};
-  JsonArray data_4 = data.createNestedArray();
-  for (int i = 0; i < 6; i++) {data_4.add(gyro_data[index][i]);};
+  for (int row = 0; row < bufferSize; row++) {
+    JsonArray data_row = data.createNestedArray();
+    for (int col = 0; col < 6; col++) {
+      data_row.add(gyro_data[(index + row) % bufferSize][col]);
+    }
+  }
 
   // send POST request
   String jsonMessage;
   serializeJson(doc, jsonMessage);
   int httpCode = http.POST(jsonMessage);
-  Serial.println(httpCode);
 
   http.end(); // close connection
+  Serial.println("Report issue to server, status: "); Serial.print(httpCode);
 }
