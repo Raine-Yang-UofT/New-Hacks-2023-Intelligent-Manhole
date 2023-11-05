@@ -25,11 +25,35 @@ const report: RequestHandler = async function (req, res) {
             WHERE manhole_id="${manhole_id}"`,
                 (err, _) => {
                     if (err) res.send(err);
-                    else res.send(`Successfully updated: ${sqlQuery}`);
+                    else res.send(`Successfully updated.`);
                 },
             );
         }
     });
 };
 
-export default report;
+const reportNormal: RequestHandler = async function (req, res) {
+    const { params } = req;
+    const manhole_id = params.manhole_id;
+    let sqlQuery = `
+    UPDATE Manhole
+    SET status="normal"
+    WHERE manhole_id="${manhole_id}"
+    `;
+    connection.query(sqlQuery, (err, _) => {
+        if (err) res.send(err);
+        else {
+            connection.query(
+                `
+                DELETE FROM Events
+                WHERE manhole_id="${manhole_id}";
+            `,
+                (err, _) => {
+                    if (err) res.send(err);
+                    else res.send(`Successfully updated.`);
+                },
+            );
+        }
+    });
+};
+export { report, reportNormal };
