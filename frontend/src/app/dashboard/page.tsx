@@ -1,4 +1,3 @@
-import ManholeItem from "./manholeItem"
 import { getAllManholeStatus } from "@/api";
 import Navigation from "@/app/navigation";
 import { Metadata } from "next";

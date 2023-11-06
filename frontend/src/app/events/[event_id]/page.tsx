@@ -14,7 +14,7 @@ export default async function ManholeEvents({ params: { event_id } }: { params: 
     return (
         <>
             <Navigation />
-            {data.length >= 10 ?
+	    {data.length >= 10 ?
                 <div className={styles.row}>
                     <div className={styles["event-column"]}>
                         <h2>Event Id: {event_id}</h2>

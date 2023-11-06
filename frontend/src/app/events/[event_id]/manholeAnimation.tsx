@@ -4,7 +4,7 @@ import { Canvas, useFrame } from "@react-three/fiber"
 import { useRef } from "react";
 import { Mesh } from "three";
 
-const pollrate = 5;
+const pollrate = 20;
 const delta_time = 1 / pollrate;
 
 export interface AnimationProps {
@@ -69,9 +69,9 @@ function Manhole({ data }: AnimationProps) {
     return (
         <mesh ref={ref}>
             <cylinderGeometry args={[
-                2,
-                2,
-                0.2,
+                1,
+                1,
+                0.1,
                 32,
                 32,
                 false,
@@ -86,7 +86,7 @@ function Manhole({ data }: AnimationProps) {
 export default function ManholeAnimation({ data }: AnimationProps) {
 
     return (
-        <div style={{ width: "50", height: "100vh" }}>
+        <div style={{ width: "50vw", height: "100vh" }}>
             <Canvas camera={{ position: [0, 0, 5] }} style={{ width: "50vw", height: "50vh", marginLeft: "auto", marginRight: "auto" }}>
                 <ambientLight intensity={0.5} />
                 <pointLight position={[10, 10, 10]} castShadow />

@@ -12,9 +12,8 @@ export const metadata: Metadata = {
 
 export default async function ManholeStatus({ params: { manhole_id } }: { params: { manhole_id: string } }) {
     const { latitude, longitude, status } = await getManholeStatus(manhole_id);
-    const events = await getManholeEventsByManholeId(manhole_id);
-
-    return (
+    const events = (await getManholeEventsByManholeId(manhole_id)).sort((a, b) => (new Date(a.time)).getTime() - (new Date(b.time)).getTime());
+   return (
         <>
             <p>&nbsp;</p>
             <Navigation />

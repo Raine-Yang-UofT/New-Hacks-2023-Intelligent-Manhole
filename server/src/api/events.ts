@@ -40,7 +40,7 @@ const eventsByManholeId: RequestHandler = async function (req, res) {
     connection.query(sqlQuery, (err, data) => {
         if (err || data.length === 0) {
             console.log(err);
-            res.json({});
+            res.json([]);
         } else {
             res.json(
                 data.map((event: Event) => {
