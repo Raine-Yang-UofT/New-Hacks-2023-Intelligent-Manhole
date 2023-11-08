@@ -16,22 +16,24 @@ const char* SERVER_URL = "http://34.71.38.254:5000/api/report/BA-001";
 MPU6050 accelgyro;
 //MPU6050 accelgyro(0x69); // <-- use for AD0 high
 
-int16_t ax, ay, az;
-int16_t gx, gy, gz;
+int16_t ax_raw, ay_raw, az_raw;
+int16_t gx_raw, gy_raw, gz_raw;
+float ax, ay, az;
+float gx, gy, gz;
 
 // threshold values for displacement and tilt
-float thresholdAX = 0.2;
-float thresholdAY = 0.2;
-float thresholdAZ = 1.2;
-float thresholdGX = 10;
-float thresholdGY = 10;
-float thresholdGZ = 10;
+float thresholdAX = 0.5;
+float thresholdAY = 0.5;
+float thresholdAZ = 1.5;
+float thresholdGX = 30;
+float thresholdGY = 30;
+float thresholdGZ = 30;
 
 // Define the size of the circular buffer
 const int bufferSize = 22;
 
 // Create a circular buffer to store readings
-int readings[bufferSize][6];
+float readings[bufferSize][6];
 int currentIndex = 0;
 
 void setup() {
@@ -88,13 +90,13 @@ void setup() {
 
 void loop() {
     // read raw accel/gyro measurements from device
-    accelgyro.getAcceleration(&ax, &ay, &az);
-    accelgyro.getRotation(&gx, &gy, &gz);
+    accelgyro.getAcceleration(&ax_raw, &ay_raw, &az_raw);
+    accelgyro.getRotation(&gx_raw, &gy_raw, &gz_raw);
 
     // convert raw data to standard units (g and degree/s)
     // Divide by sensitivity scale factor
-    ax = ax / 16384.0; ay = ay / 16384.0; az = az / 16384.0;
-    gx = gx / 131.0; gy = gy / 131.0; gz = gz / 131.0;
+    ax = static_cast<float>(ax_raw) / 16384.0; ay = static_cast<float>(ay_raw) / 16384.0; az = static_cast<float>(az_raw) / 16384.0;
+    gx = static_cast<float>(gx_raw) / 131.0; gy = static_cast<float>(gy_raw) / 131.0; gz = static_cast<float>(gz_raw) / 131.0;
 
     // Store the readings in the circular buffer
     readings[currentIndex][0] = ax;
@@ -133,7 +135,7 @@ void loop() {
         sendAbnormality(currentIndex);
     }
     
-    delay(1000);
+    delay(100);
 }
 
 
@@ -160,7 +162,10 @@ void sendAbnormality(int index) {
         jsonMessage += ", ";
       }
     }
-    jsonMessage += "],";
+    jsonMessage += "]";
+    if (i != bufferSize - 1) {
+      jsonMessage += ",";
+    }
   }
   jsonMessage += "]";
 
